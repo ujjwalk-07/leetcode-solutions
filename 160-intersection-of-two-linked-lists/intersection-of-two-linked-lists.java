@@ -42,10 +42,23 @@ public class Solution {
             temp2=temp2.next;
         }
       }
+      while(temp1 != null && temp2 != null){
+      if(temp1== temp2){
+      return temp1;
+      }
+      else{
+      temp1=temp1.next;
+      temp2=temp2.next;
+      }
+      }
+      return null;
+      /*
       while(temp1  != temp2){
+        if()
         temp1=temp1.next;
         temp2=temp2.next;
       }
       return temp1;
+      */
     }
 }
