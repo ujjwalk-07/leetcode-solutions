@@ -1,55 +1,53 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
     public ListNode[] splitListToParts(ListNode head, int k) {
-        ListNode[] ans = new ListNode[k];
-        int index = 0;
-        //find out length
+
+        // Step 1: Count total nodes
+        int len = 0;
         ListNode temp = head;
-        int len = 0 ;
-        while(temp != null){
+
+        while (temp != null) {
             len++;
-            temp=temp.next;;
+            temp = temp.next;
         }
 
-        int basesize = (len/k);
-        int extranodes  = (len %k);
+        // Step 2: Calculate size of each part
+        int size = len / k;
+        int extra = len % k;
 
-        //main logic 
-        ListNode prev =  null;
-        ListNode curr= head;
+        // Step 3: Create answer array
+        ListNode[] ans = new ListNode[k];
 
-       for(int part = 0; part < k ; part++){
-        if(curr == null){
-            ans[part] = curr;
-            continue;
-        }
-            //insert curr in array
-           ans[part] = curr;
+        // Step 4: Split the linked list
+        ListNode curr = head;
 
-            //find width of current sublist
-            int width = basesize + (extranodes > 0 ?1 : 0);
-            extranodes--;
+        for (int i = 0; i < k; i++) {
 
-            for(int i = 1;i<=width ; i++){
-                prev = curr;
-                curr = curr.next ;
+            // Store the starting node of this part
+            ans[i] = curr;
+
+            // Calculate nodes in current part
+            int partSize = size;
+
+            if (extra > 0) {
+                partSize++;
+                extra--;
             }
-            prev.next = null;
 
-            //how we will move to new iteration
-            prev  = null;
+            // Move to the last node of current part
+            for (int j = 1; j < partSize; j++) {
+                if (curr != null) {
+                    curr = curr.next;
+                }
+            }
 
-
+            // Disconnect current part
+            if (curr != null) {
+                ListNode nextPart = curr.next;
+                curr.next = null;
+                curr = nextPart;
+            }
         }
+
         return ans;
     }
 }
