@@ -16,9 +16,10 @@ class Node {
 class Solution {
     public Node copyRandomList(Node head) {
         Node temp = head;
-        if (head == null) {
+         if (head == null) {
     return null;
 }
+       
         while(temp != null)
         {
             Node clonenode = new Node(temp.val);
